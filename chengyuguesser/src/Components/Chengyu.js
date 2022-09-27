@@ -9,6 +9,7 @@ const Chengyu = () => {
   const [showEnglish, setShowEnglish] = useState(false);
   const [guess, setGuess] = useState("");
   const [characters, setCharacters] = useState(["_", "_", "_", "_"]);
+  const [randomIndex, setRandomIndex] = useState("");
 
   const setGameStartingState = () => {
     setSelectedChengyu(getChengyuList()[Math.floor(Math.random() * 100)]);
@@ -16,23 +17,17 @@ const Chengyu = () => {
     setGameWon(false);
     setShowPinyin(false);
     setShowEnglish(false);
-    setStartingCharacters();
+    setCharacters(["_", "_", "_", "_"]);
   };
 
-  useEffect(() => {
-    setStartingCharacters();
-  }, [selectedChengyu]);
-
-  const setStartingCharacters = () => {
-    if (selectedChengyu) {
-      const chengyuLength = selectedChengyu.chengyu.length;
-      const randomIndex = Math.floor(Math.random() * 4);
+  const revealCharacter = () => {
+    let randomIndex2 = Math.floor(Math.random() * 4);
+    if (characters[randomIndex2] === "_") {
       let charsCopy = [...characters];
-      charsCopy[randomIndex] = selectedChengyu.chengyu[randomIndex];
+      charsCopy[randomIndex2] = selectedChengyu.chengyu[randomIndex2];
       setCharacters(charsCopy);
-      const selectedFirstChar = selectedChengyu.chengyu[randomIndex];
-      console.log(characters);
-      console.log(chengyuLength);
+    } else {
+      revealCharacter();
     }
   };
 
@@ -94,7 +89,10 @@ const Chengyu = () => {
           </div>
         )}
         <div>
-          <button className="mt-5 bg-purple-200 border border-purple-700 text-purple-800 px-2 py-1 rounded-md">
+          <button
+            onClick={revealCharacter}
+            className="mt-5 bg-purple-200 border border-purple-700 text-purple-800 px-2 py-1 rounded-md"
+          >
             Reveal a Character
           </button>
         </div>
