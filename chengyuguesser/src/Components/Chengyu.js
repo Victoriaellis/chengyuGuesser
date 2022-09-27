@@ -11,8 +11,18 @@ const Chengyu = () => {
   const [characters, setCharacters] = useState(["_", "_", "_", "_"]);
   const [randomIndex, setRandomIndex] = useState("");
 
+  const setFourCharChengyu = () => {
+    let randomIndex = Math.floor(Math.random() * 100);
+    console.log(getChengyuList()[randomIndex].chengyu.length === 4);
+    if (getChengyuList()[randomIndex].chengyu.length === 4) {
+      setSelectedChengyu(getChengyuList()[randomIndex]);
+    } else {
+      setFourCharChengyu();
+    }
+  };
+
   const setGameStartingState = () => {
-    setSelectedChengyu(getChengyuList()[Math.floor(Math.random() * 100)]);
+    setFourCharChengyu();
     setGameStarted(true);
     setGameWon(false);
     setShowPinyin(false);
